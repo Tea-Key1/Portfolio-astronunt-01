@@ -10,7 +10,7 @@ function Origin(){
       <RigidBody position={[0,0,0]} type="kinematicPosition" scale={0.1}>
         <mesh>
           <sphereGeometry args={[1,8,8]} />
-          <meshStandardMaterial transparent opacity={0}/>
+          <meshNormalMaterial />
         </mesh>
       </RigidBody>
     </>
@@ -35,7 +35,7 @@ function Models({ vec = new THREE.Vector3(), r = THREE.MathUtils.randFloatSpread
       <BallCollider args={[scale]} />
       <CylinderCollider rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 1.2 * scale]} args={[0.15 * scale, 0.275 * scale]} />
       <group>
-        <primitive object={nodes.scene} scale={[0.2,0.2,0.2]} />
+        <primitive object={nodes.scene} scale={[0.23,0.23,0.23]} />
       </group>
     </RigidBody>
   )
@@ -56,14 +56,16 @@ function Pointer({ vec = new THREE.Vector3() }) {
 
 export default function Experience(){
   return (
-    <>
-        <Scroll>
-          <Physics gravity={[0,0,0]}>
-                <Origin />
-                <Pointer />
-                <Models />
-          </Physics>
-        </Scroll>
-    </>
+    <Scroll>
+      <Physics gravity={[0,0,0]}>
+            <Origin />
+            <Pointer />
+            <Models />
+      </Physics>
+      <mesh position={[0,-5,0]}>
+        <boxGeometry />
+        <meshStandardMaterial />
+      </mesh>
+    </Scroll>
   )
-};
+}
