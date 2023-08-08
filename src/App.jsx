@@ -1,46 +1,39 @@
-import React, { useRef, useEffect } from "react"
-import { Environment, ScrollControls } from "@react-three/drei"
+import React from "react"
+import { Environment, ScrollControls, Scroll } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import Experience from "./Experience.jsx"
-import MainPage from "./MainPage.jsx"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Underlay from "./Underlay.jsx"
 
-export default function App(){
+function Overlay() {
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <div className="Overlay-wapper" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', width: '100%', height: '100%' }}>
+          <div style={{ position: 'absolute', top: 40, left: 40, fontSize: '13px' }}>good —</div>
+          <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: '13px' }}>08/01/2023</div>
+      </div>
   )
 }
 
-const Home = () => {
-  const cameraRef = useRef();
-
-  useEffect(() => {
-    if (cameraRef.current) {
-      cameraRef.current.lookAt([0, 0, 0]);
-    }
-  }, []);
-  
+export default function App(){
   return (
-    // <Canvas
-    //   shadows
-    //   camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }} // カメラに ref を設定
-    // >
-    <Canvas
-      shadows
-      camera={{ fov: 45, near: 1, far: 100, position: [0,0,20] }}
-      onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
-    >
-      <perspectiveCamera ref={cameraRef} />
-      <ambientLight intensity={1} />
-      <ScrollControls pages={4} damping={0.5}>
-        <Experience />
-        <MainPage />
-      </ScrollControls>
-      <Environment preset="city" />
-    </Canvas>
+    <>
+      <Canvas
+        className="Canvas"
+        shadows
+        camera={{ fov: 45, near: 1, far: 100, position: [0,0,20] }}
+        onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+      >
+        <ambientLight intensity={1} />
+        <ScrollControls pages={4} damping={0.5}>
+          <Scroll>
+            <Experience />
+          </Scroll>
+          <Scroll html>
+            <Underlay />
+          </Scroll>
+        </ScrollControls>
+        <Environment preset="city" />
+      </Canvas>
+      <Overlay />
+    </>
   )
 }

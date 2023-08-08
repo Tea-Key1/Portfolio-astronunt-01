@@ -1,4 +1,4 @@
-import { useGLTF,Scroll } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { BallCollider, Physics, RigidBody, CylinderCollider } from "@react-three/rapier"
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber";
@@ -19,17 +19,20 @@ function Origin(){
 
 function Models({ vec = new THREE.Vector3(), r = THREE.MathUtils.randFloatSpread }) {
   const scale= [0.75, 0.75, 1, 1, 1.25][Math.floor(Math.random() * 5)]
+  const api = useRef(null); // 初期値をnullに設定
   const nodes = useGLTF("/models/astronunt_03.glb")
-  const api = useRef()
   useFrame((state, delta) => {
-    delta = Math.min(0.01, delta)
-    api.current.applyImpulse(
-      vec
-        .copy(api.current.translation())
-        .normalize()
-        .multiply({ x: -50 * delta * scale, y: -200 * delta * scale, z: -50 * delta * scale }),
-    )
+    if (api.current) { // api.currentがnullでない場合のみ処理を実行
+      delta = Math.min(0.01, delta)
+      api.current.applyImpulse(
+        vec
+          .copy(api.current.translation())
+          .normalize()
+          .multiply({ x: -50 * delta * scale, y: -200 * delta * scale, z: -50 * delta * scale }),
+      )
+    }
   })
+  
   return (
     <RigidBody mass={0.1} linearDamping={3} angularDamping={1} friction={0} position={[r(20), r(20) - 25, r(20) - 10]} ref={api} colliders={false} dispose={null} restitution={0}>
       <BallCollider args={[scale]} />
@@ -56,16 +59,16 @@ function Pointer({ vec = new THREE.Vector3() }) {
 
 export default function Experience(){
   return (
-    <Scroll>
+    <>
       <Physics gravity={[0,0,0]}>
-            <Origin />
-            <Pointer />
-            <Models />
+        <Origin />
+        <Pointer />
+        <Models />
       </Physics>
       <mesh position={[0,-5,0]}>
         <boxGeometry />
         <meshStandardMaterial />
       </mesh>
-    </Scroll>
+    </>
   )
 }
