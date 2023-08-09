@@ -1,4 +1,4 @@
-import { useGLTF } from "@react-three/drei";
+import { useGLTF,Text } from "@react-three/drei";
 import { BallCollider, Physics, RigidBody, CylinderCollider } from "@react-three/rapier"
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber";
@@ -10,7 +10,7 @@ function Origin(){
       <RigidBody position={[0,0,0]} type="kinematicPosition" scale={0.1}>
         <mesh>
           <sphereGeometry args={[1,8,8]} />
-          <meshNormalMaterial />
+          <meshNormalMaterial transparent opacity={0} />
         </mesh>
       </RigidBody>
     </>
@@ -65,10 +65,21 @@ export default function Experience(){
         <Pointer />
         <Models />
       </Physics>
-      <mesh position={[0,-5,0]}>
-        <boxGeometry />
-        <meshStandardMaterial />
-      </mesh>
+
+      <Text
+        scale={3}
+        position={[ 0, 3, -15]}
+      >
+        First step is 
+        <meshBasicMaterial color={"#123456"} toneMapped={ false }/>
+      </Text>
+      <Text
+        scale={3}
+        position={[ 0, 0, -15]}
+      >
+        difficult to start.
+        <meshBasicMaterial color={"#123456"} toneMapped={ false }/>
+      </Text>
     </>
   )
 }

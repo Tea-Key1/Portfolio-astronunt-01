@@ -6,14 +6,17 @@ import Underlay from "./Underlay.jsx"
 
 function Overlay() {
   return (
-      <div className="Overlay-wapper" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', width: '100%', height: '100%' }}>
-          <div style={{ position: 'absolute', top: 40, left: 40, fontSize: '13px' }}>good —</div>
-          <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: '13px' }}>08/01/2023</div>
-      </div>
+    <>
+      {/* <div className="Overlay-wapper" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'box-none', width: '100%', height: '100%' }}> */}
+        <div style={{ position: 'absolute', top: 40, left: 40, fontSize: '13px' }}>― Ask one —</div>
+        <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: '13px' }}>date</div>
+      {/* </div> */}
+    </>
   )
 }
 
 export default function App(){
+
   return (
     <>
       <Canvas

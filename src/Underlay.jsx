@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function Underlay(){
     return (
         <>
             <div className="page-whole-wrapper">
                 <div className="menu-bar-wrapper">
-                    <div className="menu-bar"></div>
+                    <div className="menu-bar" style={{position: "absolute", top: "20px", right: "200px"}}></div>
                 </div>
                 <div className="navigation-wrapper">
                     <div className="navigation">
